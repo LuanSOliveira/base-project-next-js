@@ -14,3 +14,25 @@ export const simpleTestSchemaDefaultValues: SimpleTestSchemaProps = {
 };
 
 export const simpleTestSchemaResolver = yupResolver(simpleTestSchema);
+
+//////////////////////////////////////////////////////////////////////////////
+
+const compositeTestSchema = yup.object({
+  name: yup.string().required('Campo obrigatório.'),
+  secondName: yup.string().required('Campo obrigatório.'),
+  description: yup.string().required('Campo obrigatório.'),
+  type: yup.string().required('Campo obrigatório.'),
+});
+
+export type CompositeTestSchemaProps = yup.InferType<
+  typeof compositeTestSchema
+>;
+
+export const compositeTestSchemaDefaultValues: CompositeTestSchemaProps = {
+  name: '',
+  secondName: '',
+  description: '',
+  type: '',
+};
+
+export const compositeTestSchemaResolver = yupResolver(compositeTestSchema);

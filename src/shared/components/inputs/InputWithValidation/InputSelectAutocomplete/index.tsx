@@ -14,6 +14,7 @@ export const defaultSelectAutocompleteValue: ISelectAutocompleteOptions = {
 };
 
 interface Props extends InputWithValidationProps {
+  label: string;
   placeholder?: string;
   selectedItem: ISelectAutocompleteOptions;
   setSelectedItem: (value: ISelectAutocompleteOptions) => void;
@@ -23,6 +24,7 @@ interface Props extends InputWithValidationProps {
 }
 
 const InputSelectAutocompleteWithValidation = ({
+  label,
   placeholder = '',
   selectedItem,
   setSelectedItem,
@@ -90,6 +92,7 @@ const InputSelectAutocompleteWithValidation = ({
               <TextField
                 {...params}
                 fullWidth
+                label={label}
                 placeholder={placeholder}
                 sx={AutoCompleteStyled(error, watch(registerName))}
                 onChange={(e) => ChangeInputValue(e.target.value)}

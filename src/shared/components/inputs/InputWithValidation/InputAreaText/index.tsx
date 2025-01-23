@@ -57,7 +57,7 @@ const InputAreaTextWithValidate = ({
             onChange={(e) => ChangeInputValue(e.target.value)}
           />
           {maxText && (
-            <span className="w-full flex justify-end text-sm text-gray-300">
+            <span className="w-full flex justify-end text-sm text-gray-300 bg-red-300">
               {inputValue.length}/{maxText}
             </span>
           )}

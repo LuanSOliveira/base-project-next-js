@@ -13,3 +13,17 @@ export function InputStyled(error: unknown | boolean) {
     return { width: '100%' };
   }
 }
+
+export function AutoCompleteStyled(error: unknown, value?: unknown[] | string) {
+  if (error && value !== undefined && value?.length < 1) {
+    return {
+      width: '100%',
+      '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+        borderColor: txDefault.txDefaultError,
+      },
+      '& .MuiInputLabel-root.Mui-focused': { color: txDefault.txDefaultError },
+    };
+  } else {
+    return { width: '100%' };
+  }
+}

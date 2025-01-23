@@ -1,28 +1,32 @@
 import { useState } from 'react';
-import { InputWithValidationProps } from '../interface';
 import { Skeleton, TextField } from '@mui/material';
+import { InputWithValidationProps } from '../interface';
+import { NumericFormat } from 'react-number-format';
 import { InputStyled } from '@/shared/constants';
 import ValidationSpanErro from '../../ValidationSpanError';
 
 interface Props extends InputWithValidationProps {
-  label: string;
   placeholder?: string;
   initialValue?: string;
-  required?: boolean;
+  saveValueOnStore?: (value: string) => void; // Utilizar para salvar o valor em uma store
 }
 
-const InputTextWithValidate = ({
-  label = '',
+const InputNumericValue = ({
   placeholder = '',
   initialValue = '',
-  required = false,
   registerName,
   watch,
   setValue,
   error,
+  saveValueOnStore,
   loadingInput = false,
 }: Props) => {
   const [inputValue, setInputValue] = useState<string>(initialValue);
+
+  const textFieldProps = {
+    fullWidth: true,
+    placeholder: placeholder,
+  };
 
   function ShowError(): boolean {
     if (error && watch(registerName).length <= 0) {
@@ -35,6 +39,9 @@ const InputTextWithValidate = ({
   function ChangeInputValue(value: string) {
     setInputValue(value);
     setValue(registerName, value);
+    if (saveValueOnStore) {
+      saveValueOnStore(value);
+    }
   }
 
   return (
@@ -43,14 +50,13 @@ const InputTextWithValidate = ({
         <Skeleton variant="rounded" width={'100%'} />
       ) : (
         <div className="w-full">
-          <TextField
-            required={required}
-            fullWidth
-            label={label}
-            sx={InputStyled(error && watch(registerName).length < 1)}
-            placeholder={placeholder}
+          <NumericFormat
             value={inputValue}
-            onChange={(e) => ChangeInputValue(e.target.value)}
+            customInput={TextField}
+            {...textFieldProps}
+            allowNegative={false}
+            sx={InputStyled(error && watch(registerName).length < 1)}
+            onValueChange={(values) => ChangeInputValue(values.value)}
           />
           {ShowError() && <ValidationSpanErro error={error} />}
         </div>
@@ -59,4 +65,4 @@ const InputTextWithValidate = ({
   );
 };
 
-export default InputTextWithValidate;
+export default InputNumericValue;

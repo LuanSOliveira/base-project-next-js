@@ -9,9 +9,10 @@ interface Props extends InputWithValidationProps {
   placeholder?: string;
   initialValue?: string;
   required?: boolean;
+  maxText?: number;
 }
 
-const InputTextWithValidate = ({
+const InputAreaTextWithValidate = ({
   label = '',
   placeholder = '',
   initialValue = '',
@@ -21,6 +22,7 @@ const InputTextWithValidate = ({
   setValue,
   error,
   loadingInput = false,
+  maxText,
 }: Props) => {
   const [inputValue, setInputValue] = useState<string>(initialValue);
 
@@ -46,12 +48,19 @@ const InputTextWithValidate = ({
           <TextField
             required={required}
             fullWidth
+            multiline
+            rows={3}
             label={label}
             sx={InputStyled(error && watch(registerName).length < 1)}
             placeholder={placeholder}
             value={inputValue}
             onChange={(e) => ChangeInputValue(e.target.value)}
           />
+          {maxText && (
+            <span className="w-full flex justify-end text-sm text-gray-300">
+              {inputValue.length}/{maxText}
+            </span>
+          )}
           {ShowError() && <ValidationSpanErro error={error} />}
         </div>
       )}
@@ -59,4 +68,4 @@ const InputTextWithValidate = ({
   );
 };
 
-export default InputTextWithValidate;
+export default InputAreaTextWithValidate;

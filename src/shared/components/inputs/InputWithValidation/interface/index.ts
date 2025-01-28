@@ -8,3 +8,9 @@ export interface InputWithValidationProps {
   error: string;
   loadingInput?: boolean;
 }
+
+export interface ISelectAutocompleteOptions {
+  id: string;
+  value: any;
+  label: string;
+}

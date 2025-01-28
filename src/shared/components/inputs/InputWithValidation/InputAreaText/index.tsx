@@ -2,16 +2,17 @@ import { useState } from 'react';
 import { InputWithValidationProps } from '../interface';
 import { Skeleton, TextField } from '@mui/material';
 import { InputStyled } from '@/shared/constants';
-import ValidationSpanErro from '../../ValidationSpanError';
+import AreaTextCounter from './AreaTextCounter';
 
 interface Props extends InputWithValidationProps {
   label: string;
   placeholder?: string;
   initialValue?: string;
   required?: boolean;
+  maxText?: number;
 }
 
-const InputTextWithValidate = ({
+const InputAreaTextWithValidate = ({
   label = '',
   placeholder = '',
   initialValue = '',
@@ -21,18 +22,14 @@ const InputTextWithValidate = ({
   setValue,
   error,
   loadingInput = false,
+  maxText,
 }: Props) => {
   const [inputValue, setInputValue] = useState<string>(initialValue);
 
-  function ShowError(): boolean {
-    if (error && watch(registerName).length <= 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   function ChangeInputValue(value: string) {
+    if (maxText && value.length > maxText) {
+      return;
+    }
     setInputValue(value);
     setValue(registerName, value);
   }
@@ -46,17 +43,25 @@ const InputTextWithValidate = ({
           <TextField
             required={required}
             fullWidth
+            multiline
+            rows={3}
             label={label}
             sx={InputStyled(error && watch(registerName).length < 1)}
             placeholder={placeholder}
             value={inputValue}
             onChange={(e) => ChangeInputValue(e.target.value)}
           />
-          {ShowError() && <ValidationSpanErro error={error} />}
+          <AreaTextCounter
+            maxText={maxText}
+            inputValue={inputValue}
+            error={error}
+            watch={watch}
+            registerName={registerName}
+          />
         </div>
       )}
     </>
   );
 };
 
-export default InputTextWithValidate;
+export default InputAreaTextWithValidate;

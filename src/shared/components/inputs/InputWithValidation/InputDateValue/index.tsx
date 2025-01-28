@@ -1,25 +1,24 @@
+import { Skeleton, TextField } from '@mui/material';
 import { useState } from 'react';
 import { InputWithValidationProps } from '../interface';
-import { Skeleton, TextField } from '@mui/material';
 import { InputStyled } from '@/shared/constants';
 import ValidationSpanErro from '../../ValidationSpanError';
 
 interface Props extends InputWithValidationProps {
-  label: string;
-  placeholder?: string;
+  label?: string;
   initialValue?: string;
   required?: boolean;
+  dataTeste: string;
+  saveValueOnStore?: (value: string) => void; // Utilizar para salvar o valor em uma store
 }
 
-const InputTextWithValidate = ({
-  label = '',
-  placeholder = '',
+const InputDateValue = ({
   initialValue = '',
-  required = false,
   registerName,
   watch,
   setValue,
   error,
+  saveValueOnStore,
   loadingInput = false,
 }: Props) => {
   const [inputValue, setInputValue] = useState<string>(initialValue);
@@ -35,6 +34,9 @@ const InputTextWithValidate = ({
   function ChangeInputValue(value: string) {
     setInputValue(value);
     setValue(registerName, value);
+    if (saveValueOnStore) {
+      saveValueOnStore(value);
+    }
   }
 
   return (
@@ -44,11 +46,9 @@ const InputTextWithValidate = ({
       ) : (
         <div className="w-full">
           <TextField
-            required={required}
+            type="date"
             fullWidth
-            label={label}
             sx={InputStyled(error && watch(registerName).length < 1)}
-            placeholder={placeholder}
             value={inputValue}
             onChange={(e) => ChangeInputValue(e.target.value)}
           />
@@ -59,4 +59,4 @@ const InputTextWithValidate = ({
   );
 };
 
-export default InputTextWithValidate;
+export default InputDateValue;

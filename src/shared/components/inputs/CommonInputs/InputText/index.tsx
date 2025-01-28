@@ -1,40 +1,25 @@
 import { useState } from 'react';
-import { InputWithValidationProps } from '../interface';
 import { Skeleton, TextField } from '@mui/material';
-import { InputStyled } from '@/shared/constants';
-import ValidationSpanErro from '../../ValidationSpanError';
 
-interface Props extends InputWithValidationProps {
+interface Props {
   label: string;
   placeholder?: string;
   initialValue?: string;
   required?: boolean;
+  loadingInput?: boolean;
 }
 
-const InputTextWithValidate = ({
+const CommonInputText = ({
   label = '',
   placeholder = '',
   initialValue = '',
   required = false,
-  registerName,
-  watch,
-  setValue,
-  error,
   loadingInput = false,
 }: Props) => {
   const [inputValue, setInputValue] = useState<string>(initialValue);
 
-  function ShowError(): boolean {
-    if (error && watch(registerName).length <= 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   function ChangeInputValue(value: string) {
     setInputValue(value);
-    setValue(registerName, value);
   }
 
   return (
@@ -47,16 +32,14 @@ const InputTextWithValidate = ({
             required={required}
             fullWidth
             label={label}
-            sx={InputStyled(error && watch(registerName).length < 1)}
             placeholder={placeholder}
             value={inputValue}
             onChange={(e) => ChangeInputValue(e.target.value)}
           />
-          {ShowError() && <ValidationSpanErro error={error} />}
         </div>
       )}
     </>
   );
 };
 
-export default InputTextWithValidate;
+export default CommonInputText;

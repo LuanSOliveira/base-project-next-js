@@ -4,6 +4,7 @@ import { InputWithValidationProps } from '../interface';
 import { NumericFormat } from 'react-number-format';
 import { InputStyled } from '@/shared/constants';
 import ValidationSpanErro from '../../ValidationSpanError';
+import InputContainer from '../../InputContainer';
 
 interface Props extends InputWithValidationProps {
   placeholder?: string;
@@ -50,14 +51,16 @@ const InputNumericValue = ({
         <Skeleton variant="rounded" width={'100%'} />
       ) : (
         <div className="w-full">
-          <NumericFormat
-            value={inputValue}
-            customInput={TextField}
-            {...textFieldProps}
-            allowNegative={false}
-            sx={InputStyled(error && watch(registerName).length < 1)}
-            onValueChange={(values) => ChangeInputValue(values.value)}
-          />
+          <InputContainer>
+            <NumericFormat
+              value={inputValue}
+              customInput={TextField}
+              {...textFieldProps}
+              allowNegative={false}
+              sx={InputStyled(error && watch(registerName).length < 1)}
+              onValueChange={(values) => ChangeInputValue(values.value)}
+            />
+          </InputContainer>
           {ShowError() && <ValidationSpanErro error={error} />}
         </div>
       )}

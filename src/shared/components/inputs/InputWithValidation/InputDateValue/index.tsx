@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { InputWithValidationProps } from '../interface';
 import { InputStyled } from '@/shared/constants';
 import ValidationSpanErro from '../../ValidationSpanError';
+import InputContainer from '../../InputContainer';
 
 interface Props extends InputWithValidationProps {
   label?: string;
@@ -45,13 +46,15 @@ const InputDateValue = ({
         <Skeleton variant="rounded" width={'100%'} />
       ) : (
         <div className="w-full">
-          <TextField
-            type="date"
-            fullWidth
-            sx={InputStyled(error && watch(registerName).length < 1)}
-            value={inputValue}
-            onChange={(e) => ChangeInputValue(e.target.value)}
-          />
+          <InputContainer>
+            <TextField
+              type="date"
+              fullWidth
+              sx={InputStyled(error && watch(registerName).length < 1)}
+              value={inputValue}
+              onChange={(e) => ChangeInputValue(e.target.value)}
+            />
+          </InputContainer>
           {ShowError() && <ValidationSpanErro error={error} />}
         </div>
       )}

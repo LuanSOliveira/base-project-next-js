@@ -28,6 +28,7 @@ const AreaTextCounter = ({
   return (
     <div className="flex">
       {!error && <div className="w-full"></div>}
+      {error && inputValue.length > 0 && <div className="w-full"></div>}
       {ShowError() && <ValidationSpanErro error={error} />}
       {maxText && (
         <span className="text-sm" style={{ color: 'gray' }}>

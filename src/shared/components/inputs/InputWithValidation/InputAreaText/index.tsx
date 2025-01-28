@@ -3,6 +3,7 @@ import { InputWithValidationProps } from '../interface';
 import { Skeleton, TextField } from '@mui/material';
 import { InputStyled } from '@/shared/constants';
 import AreaTextCounter from './AreaTextCounter';
+import InputContainer from '../../InputContainer';
 
 interface Props extends InputWithValidationProps {
   label: string;
@@ -40,17 +41,19 @@ const InputAreaTextWithValidate = ({
         <Skeleton variant="rounded" width={'100%'} />
       ) : (
         <div className="w-full">
-          <TextField
-            required={required}
-            fullWidth
-            multiline
-            rows={3}
-            label={label}
-            sx={InputStyled(error && watch(registerName).length < 1)}
-            placeholder={placeholder}
-            value={inputValue}
-            onChange={(e) => ChangeInputValue(e.target.value)}
-          />
+          <InputContainer>
+            <TextField
+              required={required}
+              fullWidth
+              multiline
+              rows={3}
+              label={label}
+              sx={InputStyled(error && watch(registerName).length < 1)}
+              placeholder={placeholder}
+              value={inputValue}
+              onChange={(e) => ChangeInputValue(e.target.value)}
+            />
+          </InputContainer>
           <AreaTextCounter
             maxText={maxText}
             inputValue={inputValue}

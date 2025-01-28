@@ -6,6 +6,7 @@ import {
 } from '../interface';
 import { AutoCompleteStyled } from '@/shared/constants';
 import ValidationSpanErro from '../../ValidationSpanError';
+import InputContainer from '../../InputContainer';
 
 export const defaultSelectAutocompleteValue: ISelectAutocompleteOptions = {
   id: '',
@@ -89,14 +90,16 @@ const InputSelectAutocompleteWithValidation = ({
           }}
           renderInput={(params) => (
             <div className="w-full">
-              <TextField
-                {...params}
-                fullWidth
-                label={label}
-                placeholder={placeholder}
-                sx={AutoCompleteStyled(error, watch(registerName))}
-                onChange={(e) => ChangeInputValue(e.target.value)}
-              />
+              <InputContainer>
+                <TextField
+                  {...params}
+                  fullWidth
+                  label={label}
+                  placeholder={placeholder}
+                  sx={AutoCompleteStyled(error, watch(registerName))}
+                  onChange={(e) => ChangeInputValue(e.target.value)}
+                />
+              </InputContainer>
               {ShowError() && <ValidationSpanErro error={error} />}
             </div>
           )}

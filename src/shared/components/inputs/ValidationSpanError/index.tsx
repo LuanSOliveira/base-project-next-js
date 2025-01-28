@@ -6,7 +6,10 @@ interface Props {
 
 const ValidationSpanErro = ({ error }: Props) => {
   return (
-    <span className="text-sm" style={{ color: txDefault.txDefaultError }}>
+    <span
+      className="text-sm w-full"
+      style={{ color: txDefault.txDefaultError }}
+    >
       * {error}
     </span>
   );

@@ -2,6 +2,7 @@
 
 import {
   compositeTestSchemaDefaultValues,
+  CompositeTestSchemaProps,
   compositeTestSchemaResolver,
 } from '@/shared/formSchemas';
 import { useRouter } from 'next/navigation';
@@ -33,7 +34,9 @@ const CompositeFormSection = () => {
     defaultValues: compositeTestSchemaDefaultValues,
   });
 
-  function OnSubmitForm() {
+  function OnSubmitForm(data: CompositeTestSchemaProps) {
+    console.log(filterType);
+    console.log(data);
     setLoading(true);
     setTimeout(() => {
       setLoading(false);

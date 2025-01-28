@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { InputWithValidationProps } from '../interface';
 import { Skeleton, TextField } from '@mui/material';
 import { InputStyled } from '@/shared/constants';
-import ValidationSpanErro from '../../ValidationSpanError';
+import AreaTextCounter from './AreaTextCounter';
 
 interface Props extends InputWithValidationProps {
   label: string;
@@ -26,15 +26,10 @@ const InputAreaTextWithValidate = ({
 }: Props) => {
   const [inputValue, setInputValue] = useState<string>(initialValue);
 
-  function ShowError(): boolean {
-    if (error && watch(registerName).length <= 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   function ChangeInputValue(value: string) {
+    if (maxText && value.length > maxText) {
+      return;
+    }
     setInputValue(value);
     setValue(registerName, value);
   }
@@ -56,12 +51,13 @@ const InputAreaTextWithValidate = ({
             value={inputValue}
             onChange={(e) => ChangeInputValue(e.target.value)}
           />
-          {maxText && (
-            <span className="w-full flex justify-end text-sm text-gray-300 bg-red-300">
-              {inputValue.length}/{maxText}
-            </span>
-          )}
-          {ShowError() && <ValidationSpanErro error={error} />}
+          <AreaTextCounter
+            maxText={maxText}
+            inputValue={inputValue}
+            error={error}
+            watch={watch}
+            registerName={registerName}
+          />
         </div>
       )}
     </>
